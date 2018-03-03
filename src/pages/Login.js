@@ -6,14 +6,18 @@ class Login extends Component {
   render() {
     return (
       <Container className="login-container">
-        <Button
-          block
-          color="primary"
-          onClick={this.handleGoogleLogin}
-          size="lg"
-        >
-          {"Login with Google"}
-        </Button>
+        <div>
+          <h1 className="login-message">{"Great to see you! 👋"}</h1>
+
+          <Button
+            block
+            color="primary"
+            onClick={this.handleGoogleLogin}
+            size="lg"
+          >
+            {"Login with Google"}
+          </Button>
+        </div>
       </Container>
     );
   }
