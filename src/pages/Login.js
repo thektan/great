@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import WeDeploy from "wedeploy";
+import { AUTH } from "../utils/wedeploy";
+import { ROUTES } from "../utils/routes";
 import { Container, Button } from "reactstrap";
 import "../css/Login.css";
 
@@ -11,7 +12,14 @@ class Login extends Component {
   }
 
   handleGoogleLogin() {
-    console.log("hi");
+    const googleProvider = new AUTH.provider.Google();
+    googleProvider.setProviderScope("email");
+
+    AUTH.signInWithRedirect(googleProvider);
+
+    AUTH.onSignIn(function(user) {
+      this.props.history.push(ROUTES.HOME);
+    });
   }
 
   render() {

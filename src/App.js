@@ -2,13 +2,12 @@ import React, { Component, Fragment } from "react";
 import "./App.css";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import WeDeploy from "wedeploy";
+import UserIcon from "./components/UserIcon";
+import { currentUser } from "./utils/wedeploy";
 import { ROUTES } from "./utils/routes";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 const PrivateRoute = ({ component: Component, ...otherProps }) => {
-  const { currentUser } = WeDeploy.auth("https://auth-great.wedeploy.io");
-
   return (
     <Route
       {...otherProps}
@@ -33,7 +32,9 @@ class App extends Component {
     return (
       <Router>
         <Fragment>
-          <PrivateRoute exact path="/" component={Home} />
+          <UserIcon />
+
+          <PrivateRoute exact path={ROUTES.HOME} component={Home} />
 
           <Route path={ROUTES.LOGIN} component={Login} />
         </Fragment>
