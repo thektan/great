@@ -2,20 +2,40 @@ import React, { Component, Fragment } from "react";
 import "./App.css";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import WeDeploy from "wedeploy";
+import { ROUTES } from "./utils/routes";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+
+const PrivateRoute = ({ component: Component, ...otherProps }) => {
+  const { currentUser } = WeDeploy.auth("https://auth-great.wedeploy.io");
+
+  return (
+    <Route
+      {...otherProps}
+      render={props =>
+        currentUser ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: ROUTES.LOGIN,
+              state: { from: props.location }
+            }}
+          />
+        )
+      }
+    />
+  );
+};
 
 class App extends Component {
   render() {
     return (
       <Router>
         <Fragment>
-          <Link to="/">Home</Link>
+          <PrivateRoute exact path="/" component={Home} />
 
-          <Link to="/login">Log In</Link>
-
-          <Route exact path="/" component={Home} />
-
-          <Route path="/login" component={Login} />
+          <Route path={ROUTES.LOGIN} component={Login} />
         </Fragment>
       </Router>
     );

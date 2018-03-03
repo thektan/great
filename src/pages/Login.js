@@ -1,8 +1,19 @@
 import React, { Component } from "react";
+import WeDeploy from "wedeploy";
 import { Container, Button } from "reactstrap";
 import "../css/Login.css";
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
+  }
+
+  handleGoogleLogin() {
+    console.log("hi");
+  }
+
   render() {
     return (
       <Container className="login-container">
