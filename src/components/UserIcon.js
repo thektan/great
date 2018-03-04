@@ -13,7 +13,7 @@ class UserIcon extends Component {
 
   handleSignOut() {
     AUTH.signOut()
-      .then(() => this.props.history.push(ROUTES.LOGIN))
+      .then(() => (window.location = ROUTES.LOGIN))
       .catch(err => console.log("error", err));
   }
 

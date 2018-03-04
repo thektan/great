@@ -11,15 +11,17 @@ class Login extends Component {
     this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
   }
 
+  componentDidMount() {
+    AUTH.onSignIn(user => {
+      window.location = ROUTES.HOME;
+    });
+  }
+
   handleGoogleLogin() {
     const googleProvider = new AUTH.provider.Google();
     googleProvider.setProviderScope("email");
 
     AUTH.signInWithRedirect(googleProvider);
-
-    AUTH.onSignIn(function(user) {
-      this.props.history.push(ROUTES.HOME);
-    });
   }
 
   render() {
