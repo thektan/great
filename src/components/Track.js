@@ -1,6 +1,26 @@
 import React, { Component } from "react";
+import Chart from "./Chart";
+import "frappe-charts/dist/frappe-charts.min.css";
 import { DATA } from "../utils/wedeploy";
 import { Button, Card, CardTitle } from "reactstrap";
+
+const TEST = {
+  labels: [
+    "12am-3am",
+    "3am-6pm",
+    "6am-9am",
+    "9am-12am",
+    "12pm-3pm",
+    "3pm-6pm",
+    "6pm-9pm"
+  ],
+  datasets: [
+    {
+      title: "Some Data",
+      values: [25, 40, 30, 35, 8, 52, 17]
+    }
+  ]
+};
 
 class Track extends Component {
   constructor(props) {
@@ -51,6 +71,8 @@ class Track extends Component {
     return (
       <Card body className="mb-3" key={id}>
         <CardTitle>{name}</CardTitle>
+
+        <Chart data={TEST} />
 
         <ul>{points.map(point => <li key={point.id}>{point.date}</li>)}</ul>
 
