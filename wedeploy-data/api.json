@@ -1,0 +1,18 @@
+[
+  {
+    "description": "Tracks being tracked",
+    "path": "/tracks/*",
+    "data": true,
+    "auth": {
+      "validator": "$auth != null"
+    }
+  },
+  {
+    "description": "Points on tracks",
+    "path": "/points/*",
+    "data": true,
+    "auth": {
+      "validator": "$auth != null"
+    }
+  }
+]

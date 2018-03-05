@@ -37,7 +37,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Container className="app-container">
+        <Container className="app-container w-50">
           <Navbar />
 
           <Switch>
