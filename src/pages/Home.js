@@ -17,6 +17,10 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    this.updateTracks();
+  }
+
+  updateTracks() {
     DATA.where("userId", "=", currentUser.id)
       .get("tracks")
       .then(tracks => {
@@ -38,6 +42,12 @@ class Home extends Component {
     });
   }
 
+  clearInputs() {
+    this.setState({
+      name: ""
+    });
+  }
+
   handleNewTrack(event) {
     event.preventDefault();
 
@@ -46,6 +56,10 @@ class Home extends Component {
     DATA.create("tracks", { userId: currentUser.id, name: name })
       .then(response => {
         console.log("Successfully saved", response);
+
+        this.updateTracks();
+
+        this.clearInputs();
       })
       .catch(err => {
         console.log("Error", err);
