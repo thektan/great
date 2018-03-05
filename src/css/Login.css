@@ -1,9 +1,9 @@
 .login-container {
   display: flex;
   align-items: center;
+  flex-grow: 1;
   justify-content: center;
   margin: 0 auto;
-  height: 100%;
 }
 
 .login-container button {

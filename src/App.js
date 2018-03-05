@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./App.css";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Unknown from "./pages/Unknown";
@@ -38,7 +37,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Container>
+        <Container className="app-container">
           <Navbar />
 
           <Switch>
