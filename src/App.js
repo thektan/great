@@ -1,10 +1,11 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import "./App.css";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Unknown from "./pages/Unknown";
-import UserIcon from "./components/UserIcon";
+import Navbar from "./components/Navbar";
 import { currentUser } from "./utils/wedeploy";
+import { Container } from "reactstrap";
 import { ROUTES } from "./utils/routes";
 import {
   BrowserRouter as Router,
@@ -37,8 +38,8 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Fragment>
-          <UserIcon />
+        <Container>
+          <Navbar />
 
           <Switch>
             <PrivateRoute exact path={ROUTES.HOME} component={Home} />
@@ -47,7 +48,7 @@ class App extends Component {
 
             <Route component={Unknown} />
           </Switch>
-        </Fragment>
+        </Container>
       </Router>
     );
   }

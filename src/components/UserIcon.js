@@ -19,7 +19,9 @@ class UserIcon extends Component {
 
   render() {
     return currentUser ? (
-      <Button onClick={this.handleSignOut}>{"Sign Out"}</Button>
+      <Button color="link" onClick={this.handleSignOut}>
+        {"Sign Out"}
+      </Button>
     ) : (
       <Link to={ROUTES.LOGIN}>Login</Link>
     );
