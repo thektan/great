@@ -7,7 +7,9 @@ class Navbar extends Component {
   render() {
     return (
       <RsNavbar color="faded" light>
-        <NavbarBrand href={ROUTES.HOME}>{"GREAT!"}</NavbarBrand>
+        <NavbarBrand href={ROUTES.HOME}>
+          <strong>{"GREAT!"}</strong>
+        </NavbarBrand>
 
         <Nav navbar>
           <NavItem>
