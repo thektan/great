@@ -2,7 +2,15 @@ import React, { Component } from "react";
 import Chart from "./Chart";
 import "frappe-charts/dist/frappe-charts.min.css";
 import { DATA } from "../utils/wedeploy";
-import { Button, Card, CardTitle } from "reactstrap";
+import {
+  Button,
+  Card,
+  CardTitle,
+  UncontrolledDropdown,
+  DropdownMenu,
+  DropdownToggle,
+  DropdownItem
+} from "reactstrap";
 import { groupBy, keys, map } from "lodash";
 import moment from "moment";
 
@@ -89,6 +97,13 @@ class Track extends Component {
       });
   }
 
+  /**
+   * Deletes a track and the points associated with it.
+   */
+  handleDeleteTrack() {
+    console.log("AHHH DELETE!!");
+  }
+
   render() {
     const { id, name } = this.props;
 
@@ -98,7 +113,19 @@ class Track extends Component {
 
     return (
       <Card body className="mb-3" key={id}>
-        <CardTitle>{name}</CardTitle>
+        <CardTitle>
+          {name} - {id}
+          <UncontrolledDropdown className="more-menu">
+            <DropdownToggle color="link" caret={false} size="sm">
+              {"More"}
+            </DropdownToggle>
+            <DropdownMenu className="dropdown-menu-right">
+              <DropdownItem onClick={this.handleDeleteTrack}>
+                {"Delete Track"}
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+        </CardTitle>
 
         {points.length > 0 && <Chart data={chartData} />}
 

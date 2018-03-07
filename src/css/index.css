@@ -10,3 +10,12 @@ body,
   display: flex;
   flex-direction: column;
 }
+
+.card-title {
+  display: flex;
+  align-items: center;
+}
+
+.more-menu {
+  margin-left: auto;
+}
