@@ -3,24 +3,8 @@ import Chart from "./Chart";
 import "frappe-charts/dist/frappe-charts.min.css";
 import { DATA } from "../utils/wedeploy";
 import { Button, Card, CardTitle } from "reactstrap";
-
-const TEST = {
-  labels: [
-    "12am-3am",
-    "3am-6pm",
-    "6am-9am",
-    "9am-12am",
-    "12pm-3pm",
-    "3pm-6pm",
-    "6pm-9pm"
-  ],
-  datasets: [
-    {
-      title: "Some Data",
-      values: [25, 40, 30, 35, 8, 52, 17]
-    }
-  ]
-};
+import { groupBy, keys, map } from "lodash";
+import moment from "moment";
 
 class Track extends Component {
   constructor(props) {
@@ -37,6 +21,11 @@ class Track extends Component {
     this.updatePoints();
   }
 
+  componentWillUpdate(props, state) {
+    if (state && state.points) {
+    }
+  }
+
   updatePoints() {
     const { id } = this.props;
 
@@ -45,6 +34,31 @@ class Track extends Component {
       .then(points => {
         this.setState({ points });
       });
+  }
+
+  buildChart() {
+    const { points } = this.state;
+
+    const pointsGroupedByDay = groupBy(points, item =>
+      moment(item.date)
+        .startOf("day")
+        .format("M/D")
+    );
+
+    const labels = keys(pointsGroupedByDay);
+
+    const values = map(pointsGroupedByDay, (value, key) =>
+      value.reduce((sum, item) => sum + item.amount, 0)
+    );
+
+    return {
+      labels,
+      datasets: [
+        {
+          values
+        }
+      ]
+    };
   }
 
   handleDone() {
@@ -68,11 +82,13 @@ class Track extends Component {
 
     const { points } = this.state;
 
+    let chartData = this.buildChart();
+
     return (
       <Card body className="mb-3" key={id}>
         <CardTitle>{name}</CardTitle>
 
-        <Chart data={TEST} />
+        {points.length > 0 && <Chart data={chartData} />}
 
         <ul>{points.map(point => <li key={point.id}>{point.date}</li>)}</ul>
 
