@@ -26,6 +26,9 @@ class Track extends Component {
     }
   }
 
+  /**
+   * Fetch and update the data points for this current track.
+   */
   updatePoints() {
     const { id } = this.props;
 
@@ -36,6 +39,11 @@ class Track extends Component {
       });
   }
 
+  /**
+   * Converts points into the data object needed to be digestable for frappe
+   * charts.
+   * @return {Object} Frappe chart data object.
+   */
   buildChart() {
     const { points } = this.state;
 
@@ -61,6 +69,9 @@ class Track extends Component {
     };
   }
 
+  /**
+   * What happens when you click the "done" button.
+   */
   handleDone() {
     const { id } = this.props;
 
