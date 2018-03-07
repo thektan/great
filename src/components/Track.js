@@ -33,6 +33,7 @@ class Track extends Component {
     const { id } = this.props;
 
     DATA.where("trackId", "=", id)
+      .orderBy("date", "asc")
       .get("points")
       .then(points => {
         this.setState({ points });
@@ -101,7 +102,11 @@ class Track extends Component {
 
         {points.length > 0 && <Chart data={chartData} />}
 
-        <ul>{points.map(point => <li key={point.id}>{point.date}</li>)}</ul>
+        <ul>
+          {points.map(point => (
+            <li key={point.id}>{moment(point.date).format()}</li>
+          ))}
+        </ul>
 
         <Button color="primary" onClick={this.handleDone}>
           {"Done!"}
