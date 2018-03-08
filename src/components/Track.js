@@ -23,6 +23,7 @@ class Track extends Component {
     };
 
     this.handleDone = this.handleDone.bind(this);
+    this.handleDeleteTrack = this.handleDeleteTrack.bind(this);
   }
 
   componentDidMount() {
@@ -101,7 +102,26 @@ class Track extends Component {
    * Deletes a track and the points associated with it.
    */
   handleDeleteTrack() {
-    console.log("AHHH DELETE!!");
+    const { id } = this.props;
+    const { points } = this.state;
+
+    if (
+      window.confirm(
+        "Are you sure you want to delete this track? This data will be gone forever!"
+      )
+    ) {
+      // Delete points associated with the track.
+      for (const point of points) {
+        DATA.delete(`points/${point.id}`).then(() =>
+          console.log("Successfully deleted point")
+        );
+      }
+
+      // Delete track.
+      DATA.delete(`tracks/${id}`).then(() =>
+        console.log("Successfully deleted track")
+      );
+    }
   }
 
   render() {
@@ -119,7 +139,7 @@ class Track extends Component {
             <DropdownToggle color="link" caret={false} size="sm">
               {"More"}
             </DropdownToggle>
-            <DropdownMenu className="dropdown-menu-right">
+            <DropdownMenu right>
               <DropdownItem onClick={this.handleDeleteTrack}>
                 {"Delete Track"}
               </DropdownItem>
