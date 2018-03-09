@@ -7,6 +7,9 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
+  Modal,
+  ModalBody,
+  ModalHeader,
   Table,
   UncontrolledDropdown
 } from "reactstrap";
@@ -22,21 +25,18 @@ class Track extends Component {
     super(props);
 
     this.state = {
+      logModal: false,
       points: []
     };
 
     this.handleDone = this.handleDone.bind(this);
     this.handleDeletePoint = this.handleDeletePoint.bind(this);
     this.handleDeleteTrack = this.handleDeleteTrack.bind(this);
+    this.handleLogModal = this.handleLogModal.bind(this);
   }
 
   componentDidMount() {
     this.updatePoints();
-  }
-
-  componentWillUpdate(props, state) {
-    if (state && state.points) {
-    }
   }
 
   /**
@@ -145,6 +145,15 @@ class Track extends Component {
     }
   }
 
+  /**
+   * Toggles the modal that shows the table of point data.
+   */
+  handleLogModal() {
+    this.setState({
+      logModal: !this.state.logModal
+    });
+  }
+
   render() {
     const { id, name } = this.props;
 
@@ -164,7 +173,7 @@ class Track extends Component {
               <DropdownItem onClick={this.handleAddPoint}>
                 {"Add Point"}
               </DropdownItem>
-              <DropdownItem onClick={this.handleViewLog}>
+              <DropdownItem onClick={this.handleLogModal}>
                 {"View Log"}
               </DropdownItem>
               <DropdownItem divider />
@@ -177,41 +186,50 @@ class Track extends Component {
 
         {points.length > 0 && <Chart data={chartData} />}
 
-        <Table responsive size="sm">
-          <thead>
-            <tr>
-              <th>{"Day"}</th>
-              <th>{"Time"}</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {points.map(point => (
-              <tr key={point.id}>
-                <td>{moment(point.date).format("ddd MMM D, YYYY")}</td>
-                <td>{moment(point.date).format("h:mm a")}</td>
-                <td className="text-right">
-                  <UncontrolledDropdown>
-                    <DropdownToggle color="link" caret={false} size="sm">
-                      &#8226;&#8226;&#8226;
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem
-                        onClick={() => this.handleDeletePoint(point.id)}
-                      >
-                        {"Delete Point"}
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </UncontrolledDropdown>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-
         <Button color="primary" onClick={this.handleDone} size="lg">
           {"Done!"}
         </Button>
+
+        <Modal
+          size="lg"
+          isOpen={this.state.logModal}
+          toggle={this.handleLogModal}
+        >
+          <ModalHeader toggle={this.handleLogModal}>{"Log"}</ModalHeader>
+          <ModalBody>
+            <Table responsive size="sm">
+              <thead>
+                <tr>
+                  <th>{"Day"}</th>
+                  <th>{"Time"}</th>
+                  <th />
+                </tr>
+              </thead>
+              <tbody>
+                {points.map(point => (
+                  <tr key={point.id}>
+                    <td>{moment(point.date).format("ddd MMM D, YYYY")}</td>
+                    <td>{moment(point.date).format("h:mm a")}</td>
+                    <td className="text-right">
+                      <UncontrolledDropdown>
+                        <DropdownToggle color="link" caret={false} size="sm">
+                          &#8226;&#8226;&#8226;
+                        </DropdownToggle>
+                        <DropdownMenu right>
+                          <DropdownItem
+                            onClick={() => this.handleDeletePoint(point.id)}
+                          >
+                            {"Delete Point"}
+                          </DropdownItem>
+                        </DropdownMenu>
+                      </UncontrolledDropdown>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </ModalBody>
+        </Modal>
       </Card>
     );
   }
