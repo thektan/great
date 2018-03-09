@@ -1,4 +1,5 @@
 import "frappe-charts/dist/frappe-charts.min.css";
+import "../css/Table.css";
 
 import {
   Button,
@@ -213,6 +214,22 @@ class Track extends Component {
     });
   }
 
+  /**
+   * Gets the css class to color the log table rows.
+   * @return {String} The css class to apply.
+   */
+  getRowClassName(hour) {
+    if (hour > 22 || hour < 4) {
+      return "night";
+    } else if (hour >= 4 && hour < 11) {
+      return "morning";
+    } else if (hour >= 11 && hour < 18) {
+      return "day";
+    } else {
+      return "evening";
+    }
+  }
+
   render() {
     const { id, name } = this.props;
 
@@ -267,7 +284,12 @@ class Track extends Component {
               </thead>
               <tbody>
                 {points.map(point => (
-                  <tr key={point.id}>
+                  <tr
+                    className={this.getRowClassName(
+                      moment(point.date).format("H")
+                    )}
+                    key={point.id}
+                  >
                     <td>{moment(point.date).format("ddd MMM D, YYYY")}</td>
                     <td>{moment(point.date).format("h:mm a")}</td>
                     <td className="text-right">
