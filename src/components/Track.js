@@ -161,6 +161,13 @@ class Track extends Component {
               &#8226;&#8226;&#8226;
             </DropdownToggle>
             <DropdownMenu right>
+              <DropdownItem onClick={this.handleAddPoint}>
+                {"Add Point"}
+              </DropdownItem>
+              <DropdownItem onClick={this.handleViewLog}>
+                {"View Log"}
+              </DropdownItem>
+              <DropdownItem divider />
               <DropdownItem onClick={this.handleDeleteTrack}>
                 {"Delete Track"}
               </DropdownItem>
