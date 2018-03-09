@@ -14,6 +14,12 @@ class Home extends Component {
 
   componentDidMount() {
     this.updateTracks();
+
+    DATA.where("userId", "=", currentUser.id)
+      .watch("tracks")
+      .on("changes", tracks => {
+        this.setState({ tracks });
+      });
   }
 
   updateTracks() {
