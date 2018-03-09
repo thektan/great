@@ -1,18 +1,21 @@
-import React, { Component } from "react";
-import Chart from "./Chart";
 import "frappe-charts/dist/frappe-charts.min.css";
-import { DATA } from "../utils/wedeploy";
+
 import {
   Button,
   Card,
   CardTitle,
-  UncontrolledDropdown,
+  DropdownItem,
   DropdownMenu,
   DropdownToggle,
-  DropdownItem
+  Table,
+  UncontrolledDropdown
 } from "reactstrap";
 import { groupBy, keys, map } from "lodash";
+import React, { Component } from "react";
 import moment from "moment";
+
+import { DATA } from "../utils/wedeploy";
+import Chart from "./Chart";
 
 class Track extends Component {
   constructor(props) {
@@ -23,6 +26,7 @@ class Track extends Component {
     };
 
     this.handleDone = this.handleDone.bind(this);
+    this.handleDeletePoint = this.handleDeletePoint.bind(this);
     this.handleDeleteTrack = this.handleDeleteTrack.bind(this);
   }
 
@@ -107,7 +111,7 @@ class Track extends Component {
 
     if (
       window.confirm(
-        "Are you sure you want to delete this track? This data will be gone forever!"
+        "Are you sure you want to delete this track? This data will be gone forever! 😱"
       )
     ) {
       // Delete points associated with the track.
@@ -124,20 +128,37 @@ class Track extends Component {
     }
   }
 
+  /**
+   * Deletes a single point from the track.
+   * @param {Number} id of the point to delete.
+   */
+  handleDeletePoint(id) {
+    if (
+      window.confirm(
+        "Are you sure you want to delete this point? This data will be gone forever! 😱"
+      )
+    ) {
+      DATA.delete(`points/${id}`).then(() => {
+        console.log("Successfully deleted point", id);
+        this.updatePoints();
+      });
+    }
+  }
+
   render() {
     const { id, name } = this.props;
 
     const { points } = this.state;
 
-    let chartData = this.buildChart();
+    const chartData = this.buildChart();
 
     return (
       <Card body className="mb-3" key={id}>
         <CardTitle>
-          {name} - {id}
+          {name}
           <UncontrolledDropdown className="more-menu">
             <DropdownToggle color="link" caret={false} size="sm">
-              {"More"}
+              &#8226;&#8226;&#8226;
             </DropdownToggle>
             <DropdownMenu right>
               <DropdownItem onClick={this.handleDeleteTrack}>
@@ -149,13 +170,39 @@ class Track extends Component {
 
         {points.length > 0 && <Chart data={chartData} />}
 
-        <ul>
-          {points.map(point => (
-            <li key={point.id}>{moment(point.date).format()}</li>
-          ))}
-        </ul>
+        <Table responsive size="sm">
+          <thead>
+            <tr>
+              <th>{"Day"}</th>
+              <th>{"Time"}</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {points.map(point => (
+              <tr key={point.id}>
+                <td>{moment(point.date).format("ddd MMM D, YYYY")}</td>
+                <td>{moment(point.date).format("h:mm a")}</td>
+                <td className="text-right">
+                  <UncontrolledDropdown>
+                    <DropdownToggle color="link" caret={false} size="sm">
+                      &#8226;&#8226;&#8226;
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                      <DropdownItem
+                        onClick={() => this.handleDeletePoint(point.id)}
+                      >
+                        {"Delete Point"}
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
 
-        <Button color="primary" onClick={this.handleDone}>
+        <Button color="primary" onClick={this.handleDone} size="lg">
           {"Done!"}
         </Button>
       </Card>
