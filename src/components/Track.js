@@ -7,8 +7,10 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
+  Input,
   Modal,
   ModalBody,
+  ModalFooter,
   ModalHeader,
   Table,
   UncontrolledDropdown
@@ -20,12 +22,16 @@ import moment from "moment";
 import { DATA } from "../utils/wedeploy";
 import Chart from "./Chart";
 
+const currentDateTime = moment().format("YYYY-MM-DDTHH:mm");
+
 class Track extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       logModal: false,
+      createPointModal: false,
+      pointDateTime: currentDateTime,
       points: []
     };
 
@@ -33,10 +39,27 @@ class Track extends Component {
     this.handleDeletePoint = this.handleDeletePoint.bind(this);
     this.handleDeleteTrack = this.handleDeleteTrack.bind(this);
     this.handleLogModal = this.handleLogModal.bind(this);
+    this.handleCreatePointModal = this.handleCreatePointModal.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleCreatePoint = this.handleCreatePoint.bind(this);
   }
 
   componentDidMount() {
     this.updatePoints();
+  }
+
+  /**
+   * Updates the input value state.
+   * https://reactjs.org/docs/forms.html
+   */
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
   }
 
   /**
@@ -146,11 +169,47 @@ class Track extends Component {
   }
 
   /**
+   * Creates a new point.
+   */
+  handleCreatePoint() {
+    const { id } = this.props;
+
+    const { pointDateTime } = this.state;
+
+    DATA.create("points", {
+      trackId: id,
+      date: moment(pointDateTime).valueOf(),
+      amount: 1
+    })
+      .then(response => {
+        console.log("Successfully saved", response);
+
+        this.setState({
+          createPointModal: false
+        });
+
+        this.updatePoints();
+      })
+      .catch(err => {
+        console.log("Error", err);
+      });
+  }
+
+  /**
    * Toggles the modal that shows the table of point data.
    */
   handleLogModal() {
     this.setState({
       logModal: !this.state.logModal
+    });
+  }
+
+  /**
+   * Toggles the modal that shows the form to create a new point.
+   */
+  handleCreatePointModal() {
+    this.setState({
+      createPointModal: !this.state.createPointModal
     });
   }
 
@@ -165,12 +224,13 @@ class Track extends Component {
       <Card body className="mb-3" key={id}>
         <CardTitle>
           {name}
+
           <UncontrolledDropdown className="more-menu">
             <DropdownToggle color="link" caret={false} size="sm">
               &#8226;&#8226;&#8226;
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem onClick={this.handleAddPoint}>
+              <DropdownItem onClick={this.handleCreatePointModal}>
                 {"Add Point"}
               </DropdownItem>
               <DropdownItem onClick={this.handleLogModal}>
@@ -229,6 +289,32 @@ class Track extends Component {
               </tbody>
             </Table>
           </ModalBody>
+        </Modal>
+
+        <Modal
+          isOpen={this.state.createPointModal}
+          toggle={this.handleCreatePointModal}
+        >
+          <ModalHeader toggle={this.handleCreatePointModal}>
+            {"Add a point"}
+          </ModalHeader>
+          <ModalBody>
+            <Input
+              type="datetime-local"
+              name="pointDateTime"
+              value={this.state.pointDateTime}
+              onChange={this.handleInputChange}
+              required
+            />
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={this.handleCreatePoint}>
+              {"Add point"}
+            </Button>{" "}
+            <Button color="secondary" onClick={this.handleCreatePointModal}>
+              {"Cancel"}
+            </Button>
+          </ModalFooter>
         </Modal>
       </Card>
     );
