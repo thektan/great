@@ -16,7 +16,7 @@ import {
   Table,
   UncontrolledDropdown
 } from "reactstrap";
-import { groupBy, keys, map, zipObject } from "lodash";
+import { groupBy, keys, map } from "lodash";
 import React, { Component } from "react";
 import moment from "moment";
 
