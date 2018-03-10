@@ -108,32 +108,6 @@ class Track extends Component {
   }
 
   /**
-   * Converts points into the data object needed to be digestable for frappe
-   * charts.
-   * @return {Object} Frappe chart data object.
-   */
-  buildHeatmapChart() {
-    const { points } = this.state;
-
-    const pointsGroupedByDay = groupBy(points, item =>
-      moment(item.date).startOf("day")
-    );
-
-    const labels = keys(pointsGroupedByDay).map(pointDate =>
-      moment
-        .utc(pointDate)
-        .format("X")
-        .valueOf()
-    );
-
-    const values = map(pointsGroupedByDay, (value, key) =>
-      value.reduce((sum, item) => sum + item.amount, 0)
-    );
-
-    return zipObject(labels, values);
-  }
-
-  /**
    * What happens when you click the "done" button.
    */
   handleDone() {
@@ -262,15 +236,6 @@ class Track extends Component {
     const { points } = this.state;
 
     const chartData = this.buildChart();
-    const heatmapChartData = this.buildHeatmapChart();
-
-    const startDate = moment()
-      .utc()
-      .subtract(3, "months")
-      .startOf("day")
-      .toDate();
-
-    console.log("startDate", startDate);
 
     return (
       <Card body className="mb-3" key={id}>
@@ -297,17 +262,6 @@ class Track extends Component {
         </CardTitle>
 
         {points.length > 0 && <Chart data={chartData} />}
-
-        {points.length > 0 && (
-          <Chart
-            start={new Date("2017-12-01")}
-            data={heatmapChartData}
-            discreteDomains={1}
-            title={"title testing"}
-            height={115}
-            type="heatmap"
-          />
-        )}
 
         <Button color="primary" onClick={this.handleDone} size="lg">
           {"Done!"}
