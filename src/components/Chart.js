@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Frappe from "frappe-charts/dist/frappe-charts.min.esm";
 
 /**
- * Taken from https://github.com/tobiaslins/frappe-charts-react-example/blob/master/src/chart.js
+ * @source https://github.com/tobiaslins/frappe-charts-react-example/blob/master/src/chart.js
+ * Updated to support Frappe Charts v1.0
  */
 
 class Chart extends Component {
@@ -16,13 +17,14 @@ class Chart extends Component {
       ...rest
     } = this.props;
 
-    this.c = new Frappe({
-      parent: this.chart,
+    console.log(rest);
+
+    this.c = new Frappe(this.chart, {
       title,
       data,
       type,
       height,
-      is_navigable: !!onSelect,
+      isNavigable: !!onSelect,
       ...rest
     });
 
@@ -32,7 +34,7 @@ class Chart extends Component {
   }
 
   componentWillReceiveProps(props) {
-    this.c.update_values(props.data.datasets, props.data.labels);
+    this.c.update(props.data);
   }
 
   render() {

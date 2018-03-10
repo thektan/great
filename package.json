@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.0.0",
-    "frappe-charts": "^0.0.8",
+    "frappe-charts": "^1.0.0",
     "lodash": "^4.17.5",
     "moment": "^2.21.0",
     "react": "^16.2.0",
