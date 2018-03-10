@@ -9,8 +9,10 @@ import {
   UncontrolledDropdown
 } from "reactstrap";
 import React, { Component } from "react";
-import { DATA } from "../utils/wedeploy";
 import moment from "moment";
+
+import { DATA } from "../utils/wedeploy";
+import MoreVertIcon from "../images/more-vert.svg";
 
 const DAY_FORMAT = "ddd MMM D, YYYY";
 const TIME_FORMAT = "h:mm a";
@@ -89,7 +91,7 @@ class LogModal extends Component {
                   <td className="text-right">
                     <UncontrolledDropdown>
                       <DropdownToggle color="link" caret={false} size="sm">
-                        &#8226;&#8226;&#8226;
+                        <img src={MoreVertIcon} alt="More Icon" />
                       </DropdownToggle>
                       <DropdownMenu right>
                         <DropdownItem

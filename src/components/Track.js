@@ -18,6 +18,7 @@ import { DATA } from "../utils/wedeploy";
 import CreatePointModal from "./CreatePointModal";
 import LogModal from "./LogModal";
 import Chart from "./Chart";
+import MoreVertIcon from "../images/more-vert.svg";
 
 class Track extends Component {
   constructor(props) {
@@ -202,7 +203,7 @@ class Track extends Component {
 
           <UncontrolledDropdown className="more-menu">
             <DropdownToggle color="link" caret={false} size="sm">
-              &#8226;&#8226;&#8226;
+              <img src={MoreVertIcon} alt="More Icon" />
             </DropdownToggle>
             <DropdownMenu right>
               <DropdownItem onClick={this.handleCreatePointModal}>
