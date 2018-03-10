@@ -121,11 +121,11 @@ class UserIcon extends Component {
             />
           </ModalBody>
           <ModalFooter>
+            <Button color="link" onClick={this.handleCreateTrackModal}>
+              {"Cancel"}
+            </Button>{" "}
             <Button color="primary" onClick={this.handleNewTrack}>
               {"Create track"}
-            </Button>{" "}
-            <Button color="secondary" onClick={this.handleCreateTrackModal}>
-              {"Cancel"}
             </Button>
           </ModalFooter>
         </Modal>
