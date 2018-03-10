@@ -12,6 +12,9 @@ import React, { Component } from "react";
 import { DATA } from "../utils/wedeploy";
 import moment from "moment";
 
+const DAY_FORMAT = "ddd MMM D, YYYY";
+const TIME_FORMAT = "h:mm a";
+
 class LogModal extends Component {
   constructor(props) {
     super(props);
@@ -41,7 +44,9 @@ class LogModal extends Component {
    * Gets the css class to color the log table rows.
    * @return {String} The css class to apply.
    */
-  getRowClassName(hour) {
+  getRowClassName(date) {
+    const hour = moment(date).format("H");
+
     if (hour > 22 || hour < 4) {
       return "night";
     } else if (hour >= 4 && hour < 12) {
@@ -51,6 +56,14 @@ class LogModal extends Component {
     } else {
       return "evening";
     }
+  }
+
+  getDay(date) {
+    return moment(date).format(DAY_FORMAT);
+  }
+
+  getTime(date) {
+    return moment(date).format(TIME_FORMAT);
   }
 
   render() {
@@ -70,14 +83,9 @@ class LogModal extends Component {
             </thead>
             <tbody>
               {points.map(point => (
-                <tr
-                  className={this.getRowClassName(
-                    moment(point.date).format("H")
-                  )}
-                  key={point.id}
-                >
-                  <td>{moment(point.date).format("ddd MMM D, YYYY")}</td>
-                  <td>{moment(point.date).format("h:mm a")}</td>
+                <tr className={this.getRowClassName(point.date)} key={point.id}>
+                  <td>{this.getDay(point.date)}</td>
+                  <td>{this.getTime(point.date)}</td>
                   <td className="text-right">
                     <UncontrolledDropdown>
                       <DropdownToggle color="link" caret={false} size="sm">
