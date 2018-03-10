@@ -21,6 +21,7 @@ import React, { Component } from "react";
 import moment from "moment";
 
 import { DATA } from "../utils/wedeploy";
+import LogModal from "./LogModal";
 import Chart from "./Chart";
 
 const currentDateTime = moment().format("YYYY-MM-DDTHH:mm");
@@ -37,12 +38,12 @@ class Track extends Component {
     };
 
     this.handleDone = this.handleDone.bind(this);
-    this.handleDeletePoint = this.handleDeletePoint.bind(this);
     this.handleDeleteTrack = this.handleDeleteTrack.bind(this);
-    this.handleLogModal = this.handleLogModal.bind(this);
     this.handleCreatePointModal = this.handleCreatePointModal.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleCreatePoint = this.handleCreatePoint.bind(this);
+    this.handleLogModal = this.handleLogModal.bind(this);
+    this.updatePoints = this.updatePoints.bind(this);
   }
 
   componentDidMount() {
@@ -153,23 +154,6 @@ class Track extends Component {
   }
 
   /**
-   * Deletes a single point from the track.
-   * @param {Number} id of the point to delete.
-   */
-  handleDeletePoint(id) {
-    if (
-      window.confirm(
-        "Are you sure you want to delete this point? This data will be gone forever! 😱"
-      )
-    ) {
-      DATA.delete(`points/${id}`).then(() => {
-        console.log("Successfully deleted point", id);
-        this.updatePoints();
-      });
-    }
-  }
-
-  /**
    * Creates a new point.
    */
   handleCreatePoint() {
@@ -197,7 +181,7 @@ class Track extends Component {
   }
 
   /**
-   * Toggles the modal that shows the table of point data.
+   * Toggles the modal that shows the form to create a new point.
    */
   handleLogModal() {
     this.setState({
@@ -212,22 +196,6 @@ class Track extends Component {
     this.setState({
       createPointModal: !this.state.createPointModal
     });
-  }
-
-  /**
-   * Gets the css class to color the log table rows.
-   * @return {String} The css class to apply.
-   */
-  getRowClassName(hour) {
-    if (hour > 22 || hour < 4) {
-      return "night";
-    } else if (hour >= 4 && hour < 12) {
-      return "morning";
-    } else if (hour >= 12 && hour < 18) {
-      return "day";
-    } else {
-      return "evening";
-    }
   }
 
   render() {
@@ -267,51 +235,12 @@ class Track extends Component {
           {"Done!"}
         </Button>
 
-        <Modal
-          size="lg"
-          isOpen={this.state.logModal}
-          toggle={this.handleLogModal}
-        >
-          <ModalHeader toggle={this.handleLogModal}>{"Log"}</ModalHeader>
-          <ModalBody>
-            <Table responsive size="sm">
-              <thead>
-                <tr>
-                  <th>{"Day"}</th>
-                  <th>{"Time"}</th>
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
-                {points.map(point => (
-                  <tr
-                    className={this.getRowClassName(
-                      moment(point.date).format("H")
-                    )}
-                    key={point.id}
-                  >
-                    <td>{moment(point.date).format("ddd MMM D, YYYY")}</td>
-                    <td>{moment(point.date).format("h:mm a")}</td>
-                    <td className="text-right">
-                      <UncontrolledDropdown>
-                        <DropdownToggle color="link" caret={false} size="sm">
-                          &#8226;&#8226;&#8226;
-                        </DropdownToggle>
-                        <DropdownMenu right>
-                          <DropdownItem
-                            onClick={() => this.handleDeletePoint(point.id)}
-                          >
-                            {"Delete Point"}
-                          </DropdownItem>
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </ModalBody>
-        </Modal>
+        <LogModal
+          points={points}
+          visible={this.state.logModal}
+          onToggle={this.handleLogModal}
+          onUpdatePoints={this.updatePoints}
+        />
 
         <Modal
           isOpen={this.state.createPointModal}
