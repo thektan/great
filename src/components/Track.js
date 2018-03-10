@@ -13,7 +13,6 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-  Table,
   UncontrolledDropdown
 } from "reactstrap";
 import { groupBy, keys, map } from "lodash";
