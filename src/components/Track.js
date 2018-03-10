@@ -221,9 +221,9 @@ class Track extends Component {
   getRowClassName(hour) {
     if (hour > 22 || hour < 4) {
       return "night";
-    } else if (hour >= 4 && hour < 11) {
+    } else if (hour >= 4 && hour < 12) {
       return "morning";
-    } else if (hour >= 11 && hour < 18) {
+    } else if (hour >= 12 && hour < 18) {
       return "day";
     } else {
       return "evening";
