@@ -17,8 +17,6 @@ class Chart extends Component {
       ...rest
     } = this.props;
 
-    console.log(rest);
-
     this.c = new Frappe(this.chart, {
       title,
       data,

@@ -8,11 +8,6 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
-  Input,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
   UncontrolledDropdown
 } from "reactstrap";
 import { groupBy, keys, map } from "lodash";
@@ -20,10 +15,9 @@ import React, { Component } from "react";
 import moment from "moment";
 
 import { DATA } from "../utils/wedeploy";
+import CreatePointModal from "./CreatePointModal";
 import LogModal from "./LogModal";
 import Chart from "./Chart";
-
-const currentDateTime = moment().format("YYYY-MM-DDTHH:mm");
 
 class Track extends Component {
   constructor(props) {
@@ -32,7 +26,6 @@ class Track extends Component {
     this.state = {
       logModal: false,
       createPointModal: false,
-      pointDateTime: currentDateTime,
       points: []
     };
 
@@ -155,10 +148,8 @@ class Track extends Component {
   /**
    * Creates a new point.
    */
-  handleCreatePoint() {
+  handleCreatePoint(pointDateTime) {
     const { id } = this.props;
-
-    const { pointDateTime } = this.state;
 
     DATA.create("points", {
       trackId: id,
@@ -200,7 +191,7 @@ class Track extends Component {
   render() {
     const { id, name } = this.props;
 
-    const { points } = this.state;
+    const { logModal, createPointModal, points } = this.state;
 
     const chartData = this.buildChart();
 
@@ -228,7 +219,7 @@ class Track extends Component {
           </UncontrolledDropdown>
         </CardTitle>
 
-        {points.length > 0 && <Chart data={chartData} />}
+        {points.length > 0 && <Chart data={chartData} colors={["#007bff"]} />}
 
         <Button color="primary" onClick={this.handleDone} size="lg">
           {"Done!"}
@@ -236,36 +227,16 @@ class Track extends Component {
 
         <LogModal
           points={points}
-          visible={this.state.logModal}
+          visible={logModal}
           onToggle={this.handleLogModal}
           onUpdatePoints={this.updatePoints}
         />
 
-        <Modal
-          isOpen={this.state.createPointModal}
-          toggle={this.handleCreatePointModal}
-        >
-          <ModalHeader toggle={this.handleCreatePointModal}>
-            {"Add a point"}
-          </ModalHeader>
-          <ModalBody>
-            <Input
-              type="datetime-local"
-              name="pointDateTime"
-              value={this.state.pointDateTime}
-              onChange={this.handleInputChange}
-              required
-            />
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={this.handleCreatePoint}>
-              {"Add point"}
-            </Button>{" "}
-            <Button color="secondary" onClick={this.handleCreatePointModal}>
-              {"Cancel"}
-            </Button>
-          </ModalFooter>
-        </Modal>
+        <CreatePointModal
+          visible={createPointModal}
+          onToggle={this.handleCreatePointModal}
+          onSubmit={this.handleCreatePoint}
+        />
       </Card>
     );
   }
