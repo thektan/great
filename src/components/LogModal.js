@@ -47,14 +47,14 @@ class LogModal extends Component {
   getRowClassName(date) {
     const hour = moment(date).format("H");
 
-    if (hour > 22 || hour < 4) {
-      return "night";
-    } else if (hour >= 4 && hour < 12) {
+    if (hour >= 4 && hour < 12) {
       return "morning";
     } else if (hour >= 12 && hour < 18) {
       return "day";
-    } else {
+    } else if (hour >= 18 && hour <= 22) {
       return "evening";
+    } else {
+      return "night";
     }
   }
 
