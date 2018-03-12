@@ -1,0 +1,7 @@
+{
+  "id": "node",
+  "env": {
+    "WEDEPLOY_WEB_PATH": "./build"
+  },
+  "image": "wedeploy/hosting:2.0.0"
+}
