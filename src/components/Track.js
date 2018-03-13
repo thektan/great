@@ -72,7 +72,7 @@ class Track extends Component {
   }
 
   /**
-   * Converts points into the data object needed to be digestable for frappe
+   * Converts points into the data object needed to be digestible for frappe
    * charts.
    * @return {Object} Frappe chart data object.
    */
@@ -227,7 +227,7 @@ class Track extends Component {
         </Button>
 
         <LogModal
-          points={points}
+          trackId={id}
           visible={logModal}
           onToggle={this.handleLogModal}
           onUpdatePoints={this.updatePoints}

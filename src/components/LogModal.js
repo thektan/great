@@ -21,7 +21,26 @@ class LogModal extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      points: []
+    };
+
     this.handleDeletePoint = this.handleDeletePoint.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchPoints();
+  }
+
+  fetchPoints() {
+    const { trackId } = this.props;
+
+    DATA.where("trackId", "=", trackId)
+      .orderBy("date", "desc")
+      .get("points")
+      .then(points => {
+        this.setState({ points });
+      });
   }
 
   /**
@@ -69,7 +88,9 @@ class LogModal extends Component {
   }
 
   render() {
-    const { points = [], visible, onToggle } = this.props;
+    const { visible, onToggle } = this.props;
+
+    const { points } = this.state;
 
     return (
       <Modal size="lg" isOpen={visible} toggle={onToggle}>
