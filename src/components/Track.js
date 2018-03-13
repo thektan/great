@@ -82,10 +82,12 @@ class Track extends Component {
     const pointsGroupedByDay = groupBy(points, item =>
       moment(item.date)
         .startOf("day")
-        .format("M/D")
+        .format()
     );
 
-    const labels = keys(pointsGroupedByDay);
+    const labels = keys(pointsGroupedByDay).map(label =>
+      moment(label).format("M/D")
+    );
 
     const values = map(pointsGroupedByDay, (value, key) =>
       value.reduce((sum, item) => sum + item.amount, 0)
