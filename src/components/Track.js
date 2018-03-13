@@ -10,14 +10,14 @@ import {
   DropdownToggle,
   UncontrolledDropdown
 } from "reactstrap";
-import { groupBy, keys, map } from "lodash";
+import { last, groupBy, keys, map } from "lodash";
 import React, { Component } from "react";
 import moment from "moment";
 
 import { DATA } from "../utils/wedeploy";
+import Chart from "./Chart";
 import CreatePointModal from "./CreatePointModal";
 import LogModal from "./LogModal";
-import Chart from "./Chart";
 import MoreVertIcon from "../images/more-vert.svg";
 
 class Track extends Component {
@@ -191,6 +191,18 @@ class Track extends Component {
     });
   }
 
+  getMostRecentPoint() {
+    const { points } = this.state;
+
+    if (points.length <= 0) {
+      return 0;
+    }
+
+    const mostRecentPoint = last(points);
+
+    return moment(mostRecentPoint.date).fromNow();
+  }
+
   render() {
     const { id, name } = this.props;
 
@@ -221,6 +233,11 @@ class Track extends Component {
             </DropdownMenu>
           </UncontrolledDropdown>
         </CardTitle>
+
+        <div className="stat-block">
+          <div className="stat-block--label">{"Most Recent"}</div>
+          <div className="stat-block--value">{this.getMostRecentPoint()}</div>
+        </div>
 
         {points.length > 0 && <Chart data={chartData} colors={["#007bff"]} />}
 
