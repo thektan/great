@@ -35,6 +35,8 @@ class LogModal extends Component {
   fetchPoints() {
     const { trackId } = this.props;
 
+    console.log("fetch");
+
     DATA.where("trackId", "=", trackId)
       .orderBy("date", "desc")
       .get("points")

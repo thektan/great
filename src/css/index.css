@@ -24,3 +24,8 @@ body,
 .more-menu {
   margin-left: auto;
 }
+
+.chart-block {
+  margin-right: -35px;
+  margin-left: -35px;
+}

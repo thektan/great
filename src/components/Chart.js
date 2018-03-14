@@ -36,7 +36,7 @@ class Chart extends Component {
   }
 
   render() {
-    return <div ref={chart => (this.chart = chart)} />;
+    return <div className="chart-block" ref={chart => (this.chart = chart)} />;
   }
 }
 
