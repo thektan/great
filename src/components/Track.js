@@ -251,18 +251,22 @@ class Track extends Component {
           {"Done!"}
         </Button>
 
-        <LogModal
-          trackId={id}
-          visible={logModal}
-          onToggle={this.handleLogModal}
-          onUpdatePoints={this.updatePoints}
-        />
+        {logModal && (
+          <LogModal
+            trackId={id}
+            visible={logModal}
+            onToggle={this.handleLogModal}
+            onUpdatePoints={this.updatePoints}
+          />
+        )}
 
-        <CreatePointModal
-          visible={createPointModal}
-          onToggle={this.handleCreatePointModal}
-          onSubmit={this.handleCreatePoint}
-        />
+        {createPointModal && (
+          <CreatePointModal
+            visible={createPointModal}
+            onToggle={this.handleCreatePointModal}
+            onSubmit={this.handleCreatePoint}
+          />
+        )}
       </Card>
     );
   }
