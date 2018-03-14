@@ -1,0 +1,10 @@
+.stat-block .stat-block--label {
+  color: var(--label-color);
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.stat-block .stat-block--value {
+  font-size: 1.5rem;
+}

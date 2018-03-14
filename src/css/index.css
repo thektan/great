@@ -1,3 +1,7 @@
+:root {
+  --label-color: #bcc1c7;
+}
+
 html,
 body,
 #root {

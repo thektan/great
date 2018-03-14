@@ -1,5 +1,6 @@
 import "frappe-charts/dist/frappe-charts.min.css";
 import "../css/Table.css";
+import "../css/Track.css";
 
 import {
   Button,
@@ -199,6 +200,11 @@ class Track extends Component {
     }
 
     const mostRecentPoint = last(points);
+
+    moment.relativeTimeThreshold("ss", 0);
+    moment.relativeTimeThreshold("m", 60);
+    moment.relativeTimeThreshold("h", 24);
+    moment.relativeTimeThreshold("d", 365);
 
     return moment(mostRecentPoint.date).fromNow();
   }
