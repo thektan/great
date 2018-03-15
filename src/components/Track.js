@@ -11,7 +11,7 @@ import {
   DropdownToggle,
   UncontrolledDropdown
 } from "reactstrap";
-import { last, groupBy, keys, map } from "lodash";
+import { last, groupBy, keys, merge, map, times, zipObject } from "lodash";
 import React, { Component } from "react";
 import moment from "moment";
 
@@ -64,7 +64,16 @@ class Track extends Component {
   updatePoints() {
     const { id } = this.props;
 
+    const currentDate = moment()
+      .endOf("day")
+      .valueOf();
+    const aWeekAgoDate = moment()
+      .startOf("day")
+      .subtract(6, "d")
+      .valueOf();
+
     DATA.where("trackId", "=", id)
+      .range("date", aWeekAgoDate, currentDate)
       .orderBy("date", "asc")
       .get("points")
       .then(points => {
@@ -80,17 +89,28 @@ class Track extends Component {
   buildChart() {
     const { points } = this.state;
 
+    const weekArray = times(7, i =>
+      moment()
+        .subtract(i, "d")
+        .startOf("day")
+        .format()
+    ).reverse();
+
+    const weekArrayEmptyMap = zipObject(weekArray, times(7, () => []));
+
     const pointsGroupedByDay = groupBy(points, item =>
       moment(item.date)
         .startOf("day")
         .format()
     );
 
-    const labels = keys(pointsGroupedByDay).map(label =>
+    const pointsArrayMap = merge(weekArrayEmptyMap, pointsGroupedByDay);
+
+    const labels = keys(pointsArrayMap).map(label =>
       moment(label).format("M/D")
     );
 
-    const values = map(pointsGroupedByDay, (value, key) =>
+    const values = map(pointsArrayMap, (value, key) =>
       value.reduce((sum, item) => sum + item.amount, 0)
     );
 
