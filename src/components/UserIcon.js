@@ -118,6 +118,7 @@ class UserIcon extends Component {
               value={this.state.name}
               onChange={this.handleInputChange}
               required
+              autoFocus
             />
           </ModalBody>
           <ModalFooter>

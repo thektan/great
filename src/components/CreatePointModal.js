@@ -70,6 +70,7 @@ class CreatePointModal extends Component {
             value={this.state.pointDateTime}
             onChange={this.handleInputChange}
             required
+            autoFocus
           />
         </ModalBody>
         <ModalFooter>
