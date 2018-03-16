@@ -29,3 +29,7 @@ body,
   margin-right: -35px;
   margin-left: -35px;
 }
+
+.welcome-message {
+  font-weight: 600;
+}

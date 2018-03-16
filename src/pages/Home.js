@@ -35,7 +35,9 @@ class Home extends Component {
 
     return (
       <Container>
-        <h1 className="mb-5 mt-3">{`Looking great, ${currentUser.name}!`}</h1>
+        <h1 className="welcome-message mb-5 mt-3">{`Looking great, ${
+          currentUser.name
+        }!`}</h1>
 
         <div className="mb-5">
           {tracks.map(track => (
