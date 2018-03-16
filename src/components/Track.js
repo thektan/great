@@ -11,7 +11,7 @@ import {
   DropdownToggle,
   UncontrolledDropdown
 } from "reactstrap";
-import { last, groupBy, keys, merge, map, times, zipObject } from "lodash";
+import { groupBy, keys, merge, map, times, zipObject } from "lodash";
 import React, { Component } from "react";
 import moment from "moment";
 
@@ -28,6 +28,7 @@ class Track extends Component {
     this.state = {
       logModal: false,
       createPointModal: false,
+      timeAgoSinceMostRecent: null,
       points: []
     };
 
@@ -42,6 +43,8 @@ class Track extends Component {
 
   componentDidMount() {
     this.updatePoints();
+
+    this.setMostRecentPoint();
   }
 
   /**
@@ -137,6 +140,7 @@ class Track extends Component {
         console.log("Successfully saved", response);
 
         this.updatePoints();
+        this.setMostRecentPoint();
       })
       .catch(err => {
         console.log("Error", err);
@@ -212,27 +216,34 @@ class Track extends Component {
     });
   }
 
-  getMostRecentPoint() {
-    const { points } = this.state;
+  setMostRecentPoint() {
+    const { id } = this.props;
 
-    if (points.length <= 0) {
-      return 0;
-    }
+    DATA.where("trackId", "=", id)
+      .orderBy("date", "desc")
+      .limit(1)
+      .get("points")
+      .then(points => {
+        moment.relativeTimeThreshold("ss", 1);
+        moment.relativeTimeThreshold("m", 60);
+        moment.relativeTimeThreshold("h", 24);
+        moment.relativeTimeThreshold("d", 365);
 
-    const mostRecentPoint = last(points);
-
-    moment.relativeTimeThreshold("ss", 0);
-    moment.relativeTimeThreshold("m", 60);
-    moment.relativeTimeThreshold("h", 24);
-    moment.relativeTimeThreshold("d", 365);
-
-    return moment(mostRecentPoint.date).fromNow();
+        this.setState({
+          timeAgoSinceMostRecent: moment(points[0].date).fromNow()
+        });
+      });
   }
 
   render() {
     const { id, name } = this.props;
 
-    const { logModal, createPointModal, points } = this.state;
+    const {
+      logModal,
+      createPointModal,
+      points,
+      timeAgoSinceMostRecent
+    } = this.state;
 
     const chartData = this.buildChart();
 
@@ -260,10 +271,12 @@ class Track extends Component {
           </UncontrolledDropdown>
         </CardTitle>
 
-        <div className="stat-block">
-          <div className="stat-block--label">{"Most Recent"}</div>
-          <div className="stat-block--value">{this.getMostRecentPoint()}</div>
-        </div>
+        {timeAgoSinceMostRecent && (
+          <div className="stat-block">
+            <div className="stat-block--label">{"Most Recent"}</div>
+            <div className="stat-block--value">{timeAgoSinceMostRecent}</div>
+          </div>
+        )}
 
         {points.length > 0 && <Chart data={chartData} colors={["#007bff"]} />}
 
