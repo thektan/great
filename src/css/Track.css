@@ -1,10 +1,20 @@
-.stat-block .stat-block--label {
+.stat-block .stat-block__label {
   color: var(--label-color);
   font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
 }
 
-.stat-block .stat-block--value {
+.stat-block .stat-block__value {
   font-size: 1.5rem;
+}
+
+.section__details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button__done {
+  width: 100px;
 }

@@ -35,9 +35,6 @@ body,
   font-weight: 600;
 }
 
-.icon {
-}
-
 .icon-settings {
   color: var(--light-gray);
   height: 20px;

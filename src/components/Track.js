@@ -1,5 +1,6 @@
 import "frappe-charts/dist/frappe-charts.min.css";
-import "../css/Table.css";
+import "../css/Chart.css";
+import "../css/Track.css";
 import "../css/Track.css";
 
 import {
@@ -19,8 +20,9 @@ import { DATA } from "../utils/wedeploy";
 import Chart from "./Chart";
 import CreatePointModal from "./CreatePointModal";
 import LogModal from "./LogModal";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import Icon from "@fortawesome/react-fontawesome";
 import faCog from "@fortawesome/fontawesome-free-solid/faCog";
+import faCheck from "@fortawesome/fontawesome-free-solid/faCheck";
 
 class Track extends Component {
   constructor(props) {
@@ -250,11 +252,7 @@ class Track extends Component {
 
           <UncontrolledDropdown className="more-menu">
             <DropdownToggle color="link" caret={false} size="sm">
-              <FontAwesomeIcon
-                className="icon-settings"
-                icon={faCog}
-                size="lg"
-              />
+              <Icon className="icon-settings" icon={faCog} size="lg" />
             </DropdownToggle>
             <DropdownMenu right>
               <DropdownItem onClick={this.handleCreatePointModal}>
@@ -271,18 +269,25 @@ class Track extends Component {
           </UncontrolledDropdown>
         </CardTitle>
 
-        {timeAgoSinceMostRecent && (
-          <div className="stat-block">
-            <div className="stat-block--label">{"Most Recent"}</div>
-            <div className="stat-block--value">{timeAgoSinceMostRecent}</div>
-          </div>
-        )}
+        <div className="section__details">
+          {timeAgoSinceMostRecent && (
+            <div className="stat-block">
+              <div className="stat-block__label">{"Most Recent"}</div>
+              <div className="stat-block__value">{timeAgoSinceMostRecent}</div>
+            </div>
+          )}
+
+          <Button
+            className="button__done"
+            color="primary"
+            onClick={this.handleDone}
+            size="lg"
+          >
+            <Icon icon={faCheck} />
+          </Button>
+        </div>
 
         <Chart data={chartData} colors={["#007bff"]} />
-
-        <Button color="primary" onClick={this.handleDone} size="lg">
-          {"Done!"}
-        </Button>
 
         {logModal && (
           <LogModal
