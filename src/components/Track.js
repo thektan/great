@@ -19,7 +19,8 @@ import { DATA } from "../utils/wedeploy";
 import Chart from "./Chart";
 import CreatePointModal from "./CreatePointModal";
 import LogModal from "./LogModal";
-import MoreVertIcon from "../images/more-vert.svg";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faCog from "@fortawesome/fontawesome-free-solid/faCog";
 
 class Track extends Component {
   constructor(props) {
@@ -249,7 +250,11 @@ class Track extends Component {
 
           <UncontrolledDropdown className="more-menu">
             <DropdownToggle color="link" caret={false} size="sm">
-              <img src={MoreVertIcon} alt="More Icon" />
+              <FontAwesomeIcon
+                className="icon-settings"
+                icon={faCog}
+                size="lg"
+              />
             </DropdownToggle>
             <DropdownMenu right>
               <DropdownItem onClick={this.handleCreatePointModal}>

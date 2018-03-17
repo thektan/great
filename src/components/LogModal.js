@@ -12,7 +12,7 @@ import React, { Component } from "react";
 import moment from "moment";
 
 import { DATA } from "../utils/wedeploy";
-import MoreVertIcon from "../images/more-vert.svg";
+import MoreVertIcon from "../icons/more-vert.svg";
 
 const DAY_FORMAT = "ddd MMM D, YYYY";
 const TIME_FORMAT = "h:mm a";
