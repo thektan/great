@@ -238,12 +238,7 @@ class Track extends Component {
   render() {
     const { id, name } = this.props;
 
-    const {
-      logModal,
-      createPointModal,
-      points,
-      timeAgoSinceMostRecent
-    } = this.state;
+    const { logModal, createPointModal, timeAgoSinceMostRecent } = this.state;
 
     const chartData = this.buildChart();
 
@@ -278,7 +273,7 @@ class Track extends Component {
           </div>
         )}
 
-        {points.length > 0 && <Chart data={chartData} colors={["#007bff"]} />}
+        <Chart data={chartData} colors={["#007bff"]} />
 
         <Button color="primary" onClick={this.handleDone} size="lg">
           {"Done!"}
