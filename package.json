@@ -8,6 +8,7 @@
     "@fortawesome/react-fontawesome": "^0.0.17",
     "bootstrap": "^4.0.0",
     "frappe-charts": "^1.0.0",
+    "halogenium": "^2.2.3",
     "lodash": "^4.17.5",
     "moment": "^2.21.0",
     "react": "^16.2.0",

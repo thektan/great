@@ -23,16 +23,18 @@ import LogModal from "./LogModal";
 import Icon from "@fortawesome/react-fontawesome";
 import faCog from "@fortawesome/fontawesome-free-solid/faCog";
 import faCheck from "@fortawesome/fontawesome-free-solid/faCheck";
+import { PulseLoader as Loader } from "halogenium";
 
 class Track extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      logModal: false,
+      points: [],
       createPointModal: false,
+      logModal: false,
       timeAgoSinceMostRecent: null,
-      points: []
+      doneSubmitting: false
     };
 
     this.handleDone = this.handleDone.bind(this);
@@ -136,6 +138,8 @@ class Track extends Component {
   handleDone() {
     const { id } = this.props;
 
+    this.setState({ doneSubmitting: true });
+
     const currentDate = Date.now();
 
     DATA.create("points", { trackId: id, date: currentDate, amount: 1 })
@@ -147,6 +151,9 @@ class Track extends Component {
       })
       .catch(err => {
         console.log("Error", err);
+      })
+      .then(() => {
+        this.setState({ doneSubmitting: false });
       });
   }
 
@@ -241,7 +248,12 @@ class Track extends Component {
   render() {
     const { id, name } = this.props;
 
-    const { logModal, createPointModal, timeAgoSinceMostRecent } = this.state;
+    const {
+      doneSubmitting,
+      logModal,
+      createPointModal,
+      timeAgoSinceMostRecent
+    } = this.state;
 
     const chartData = this.buildChart();
 
@@ -280,10 +292,13 @@ class Track extends Component {
           <Button
             className="button__done"
             color="primary"
+            disabled={doneSubmitting}
             onClick={this.handleDone}
             size="lg"
           >
-            <Icon icon={faCheck} />
+            {!doneSubmitting && <Icon icon={faCheck} />}
+
+            {doneSubmitting && <Loader size="10px" />}
           </Button>
         </div>
 
