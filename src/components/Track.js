@@ -21,9 +21,13 @@ import Chart from "./Chart";
 import CreatePointModal from "./CreatePointModal";
 import LogModal from "./LogModal";
 import Icon from "@fortawesome/react-fontawesome";
-import faCog from "@fortawesome/fontawesome-free-solid/faCog";
-import faCheck from "@fortawesome/fontawesome-free-solid/faCheck";
+import {
+  faCog,
+  faCheck,
+  faThumbsUp
+} from "@fortawesome/fontawesome-free-solid";
 import { PulseLoader as Loader } from "halogenium";
+import { Transition } from "react-transition-group";
 
 class Track extends Component {
   constructor(props) {
@@ -299,6 +303,18 @@ class Track extends Component {
             {!doneSubmitting && <Icon icon={faCheck} />}
 
             {doneSubmitting && <Loader size="10px" />}
+
+            <Transition in={doneSubmitting} timeout={1000}>
+              {status => (
+                <div className={`animation-done animation-done--${status}`}>
+                  <Icon
+                    className="animation-done__icon"
+                    icon={faThumbsUp}
+                    size="sm"
+                  />
+                </div>
+              )}
+            </Transition>
           </Button>
         </div>
 
