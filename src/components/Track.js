@@ -1,6 +1,6 @@
 import "frappe-charts/dist/frappe-charts.min.css";
 import "../css/Chart.css";
-import "../css/Track.css";
+import "../css/Table.css";
 import "../css/Track.css";
 
 import {
