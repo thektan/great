@@ -244,7 +244,9 @@ class Track extends Component {
         moment.relativeTimeThreshold("d", 365);
 
         this.setState({
-          timeAgoSinceMostRecent: moment(points[0].date).fromNow()
+          timeAgoSinceMostRecent: points[0]
+            ? moment(points[0].date).fromNow()
+            : "No data yet"
         });
       });
   }
