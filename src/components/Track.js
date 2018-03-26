@@ -37,6 +37,7 @@ class Track extends Component {
       points: [],
       createPointModal: false,
       logModal: false,
+      statsLoading: true,
       timeAgoSinceMostRecent: null,
       doneSubmitting: false
     };
@@ -244,6 +245,7 @@ class Track extends Component {
         moment.relativeTimeThreshold("d", 365);
 
         this.setState({
+          statsLoading: false,
           timeAgoSinceMostRecent: points[0]
             ? moment(points[0].date).fromNow()
             : "No data yet"
@@ -258,6 +260,7 @@ class Track extends Component {
       doneSubmitting,
       logModal,
       createPointModal,
+      statsLoading,
       timeAgoSinceMostRecent
     } = this.state;
 
@@ -288,6 +291,10 @@ class Track extends Component {
         </CardTitle>
 
         <div className="section__details">
+          {statsLoading && (
+            <Loader className="loading-container" color="#C1C7D6" size="10px" />
+          )}
+
           {timeAgoSinceMostRecent && (
             <div className="stat-block">
               <div className="stat-block__label">{"Most Recent"}</div>
