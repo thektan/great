@@ -34,9 +34,11 @@ class Home extends Component {
 
     return (
       <Container>
-        <h1 className="welcome-message mb-5 mt-3">{`Looking great, ${
-          currentUser.name
-        }!`}</h1>
+        <h1 className="welcome-message mb-5 mt-3">
+          {currentUser.name
+            ? `Looking great, ${currentUser.name}!`
+            : "Looking great!"}
+        </h1>
 
         {loading && (
           <Loader className="loading-container" color="#C1C7D6" size="10px" />

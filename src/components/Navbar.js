@@ -8,7 +8,7 @@ class Navbar extends Component {
     return (
       <RsNavbar color="faded" light>
         <NavbarBrand href={ROUTES.HOME}>
-          <strong>{"GREAT!"}</strong>
+          <strong>{"👍 GREAT!"}</strong>
         </NavbarBrand>
 
         <Nav navbar>
