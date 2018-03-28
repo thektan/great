@@ -24,6 +24,7 @@ import { groupBy, keys, merge, map, times, zipObject } from "lodash";
 import { withRouter } from "react-router-dom";
 import Icon from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
+import classNames from "classnames";
 import moment from "moment";
 
 import { DATA } from "../utils/wedeploy";
@@ -280,7 +281,15 @@ class TrackCard extends Component {
     } = this.state;
 
     return (
-      <Card body className="mb-3" key={id} onClick={this.handleClick}>
+      <Card
+        body
+        className={classNames("track-card", "mb-3", {
+          compact,
+          "mt-3": !compact
+        })}
+        key={id}
+        onClick={this.handleClick}
+      >
         <CardTitle>
           {name}
 
@@ -288,8 +297,13 @@ class TrackCard extends Component {
             className="more-menu"
             onClick={event => event.stopPropagation()}
           >
-            <DropdownToggle color="link" caret={false} size="sm">
-              <Icon className="icon-settings" icon={faCog} size="lg" />
+            <DropdownToggle
+              className="settings__button"
+              color="link"
+              caret={false}
+              size="sm"
+            >
+              <Icon className="settings__icon" icon={faCog} size="lg" />
             </DropdownToggle>
             <DropdownMenu right>
               <DropdownItem onClick={this.handleCreatePointModal}>

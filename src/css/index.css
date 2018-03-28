@@ -1,9 +1,10 @@
 :root {
-  --primary-color: #2072e8;
-  --secondary-color: #e8f1ff;
-  --label-color: #bcc1c7;
+  --color-primary: #2072e8;
+  --color-secondary: #e8f1ff;
+  --color-label: #bcc1c7;
 
-  --light-gray: #c1c7d6;
+  --gray-light: #c1c7d6;
+  --gray-dark: #6d7682;
 }
 
 html,
@@ -36,10 +37,4 @@ body,
 
 .welcome-message {
   font-weight: 600;
-}
-
-.icon-settings {
-  color: var(--light-gray);
-  height: 20px;
-  width: 20px;
 }

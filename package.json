@@ -7,6 +7,7 @@
     "@fortawesome/fontawesome-free-solid": "^5.0.8",
     "@fortawesome/react-fontawesome": "^0.0.17",
     "bootstrap": "^4.0.0",
+    "classnames": "^2.2.5",
     "frappe-charts": "^1.0.0",
     "halogenium": "^2.2.3",
     "lodash": "^4.17.5",
