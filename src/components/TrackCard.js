@@ -1,4 +1,5 @@
 import "frappe-charts/dist/frappe-charts.min.css";
+
 import "../css/Chart.css";
 import "../css/Table.css";
 import "../css/Track.css";
@@ -12,7 +13,16 @@ import {
   DropdownToggle,
   UncontrolledDropdown
 } from "reactstrap";
+import { PulseLoader as Loader } from "halogenium";
+import { Transition } from "react-transition-group";
+import {
+  faCog,
+  faCheck,
+  faThumbsUp
+} from "@fortawesome/fontawesome-free-solid";
 import { groupBy, keys, merge, map, times, zipObject } from "lodash";
+import { withRouter } from "react-router-dom";
+import Icon from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import moment from "moment";
 
@@ -20,14 +30,6 @@ import { DATA } from "../utils/wedeploy";
 import Chart from "./Chart";
 import CreatePointModal from "./CreatePointModal";
 import LogModal from "./LogModal";
-import Icon from "@fortawesome/react-fontawesome";
-import {
-  faCog,
-  faCheck,
-  faThumbsUp
-} from "@fortawesome/fontawesome-free-solid";
-import { PulseLoader as Loader } from "halogenium";
-import { Transition } from "react-transition-group";
 
 class TrackCard extends Component {
   constructor(props) {
@@ -42,6 +44,7 @@ class TrackCard extends Component {
       doneSubmitting: false
     };
 
+    this.handleClick = this.handleClick.bind(this);
     this.handleDone = this.handleDone.bind(this);
     this.handleDeleteTrack = this.handleDeleteTrack.bind(this);
     this.handleCreatePointModal = this.handleCreatePointModal.bind(this);
@@ -137,10 +140,18 @@ class TrackCard extends Component {
     };
   }
 
+  handleClick() {
+    const { id } = this.props;
+
+    this.props.history.push(`/tracks/${id}`);
+  }
+
   /**
    * What happens when you click the "done" button.
    */
-  handleDone() {
+  handleDone(event) {
+    event.stopPropagation();
+
     const { id } = this.props;
 
     this.setState({ doneSubmitting: true });
@@ -267,11 +278,14 @@ class TrackCard extends Component {
     const chartData = this.buildChart();
 
     return (
-      <Card body className="mb-3" key={id}>
+      <Card body className="mb-3" key={id} onClick={this.handleClick}>
         <CardTitle>
           {name}
 
-          <UncontrolledDropdown className="more-menu">
+          <UncontrolledDropdown
+            className="more-menu"
+            onClick={event => event.stopPropagation()}
+          >
             <DropdownToggle color="link" caret={false} size="sm">
               <Icon className="icon-settings" icon={faCog} size="lg" />
             </DropdownToggle>
@@ -350,4 +364,4 @@ class TrackCard extends Component {
   }
 }
 
-export default TrackCard;
+export default withRouter(TrackCard);
