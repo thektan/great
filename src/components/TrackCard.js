@@ -141,7 +141,11 @@ class TrackCard extends Component {
   }
 
   handleClick() {
-    const { id } = this.props;
+    const { compact, id } = this.props;
+
+    if (!compact) {
+      return;
+    }
 
     this.props.history.push(`/tracks/${id}`);
   }
@@ -265,7 +269,7 @@ class TrackCard extends Component {
   }
 
   render() {
-    const { id, name } = this.props;
+    const { compact = false, id, name } = this.props;
 
     const {
       doneSubmitting,
@@ -274,8 +278,6 @@ class TrackCard extends Component {
       statsLoading,
       timeAgoSinceMostRecent
     } = this.state;
-
-    const chartData = this.buildChart();
 
     return (
       <Card body className="mb-3" key={id} onClick={this.handleClick}>
@@ -341,7 +343,7 @@ class TrackCard extends Component {
           </Button>
         </div>
 
-        <Chart data={chartData} colors={["#007bff"]} />
+        {!compact && <Chart data={this.buildChart()} colors={["#007bff"]} />}
 
         {logModal && (
           <LogModal

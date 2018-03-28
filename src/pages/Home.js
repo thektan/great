@@ -44,7 +44,7 @@ class Home extends Component {
 
         <div className="mb-5">
           {tracks.map(track => (
-            <TrackCard id={track.id} key={track.id} name={track.name} />
+            <TrackCard compact id={track.id} key={track.id} name={track.name} />
           ))}
         </div>
       </Container>
