@@ -6,7 +6,7 @@ class Login extends Component {
     return (
       <Container>
         <div>
-          <h1>{"Sorry, this page doesn't exist."}</h1>
+          <h1>{"Sorry, this page doesn't exist. 🧐"}</h1>
         </div>
       </Container>
     );
