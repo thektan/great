@@ -2,7 +2,7 @@ import { Container } from "reactstrap";
 import React, { Component } from "react";
 import { PulseLoader as Loader } from "halogenium";
 import { currentUser, DATA } from "../utils/wedeploy";
-import Track from "../components/Track";
+import TrackCard from "../components/TrackCard";
 import "../css/Loader.css";
 
 class Home extends Component {
@@ -44,7 +44,7 @@ class Home extends Component {
 
         <div className="mb-5">
           {tracks.map(track => (
-            <Track id={track.id} key={track.id} name={track.name} />
+            <TrackCard id={track.id} key={track.id} name={track.name} />
           ))}
         </div>
       </Container>

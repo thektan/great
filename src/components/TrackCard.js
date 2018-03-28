@@ -29,7 +29,7 @@ import {
 import { PulseLoader as Loader } from "halogenium";
 import { Transition } from "react-transition-group";
 
-class Track extends Component {
+class TrackCard extends Component {
   constructor(props) {
     super(props);
 
@@ -350,4 +350,4 @@ class Track extends Component {
   }
 }
 
-export default Track;
+export default TrackCard;
