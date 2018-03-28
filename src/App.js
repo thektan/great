@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Track from "./pages/Track";
 import Unknown from "./pages/Unknown";
 import Navbar from "./components/Navbar";
 import { currentUser } from "./utils/wedeploy";
@@ -44,6 +45,8 @@ class App extends Component {
             <PrivateRoute exact path={ROUTES.HOME} component={Home} />
 
             <Route path={ROUTES.LOGIN} component={Login} />
+
+            <Route path={ROUTES.TRACK} component={Track} />
 
             <Route component={Unknown} />
           </Switch>
