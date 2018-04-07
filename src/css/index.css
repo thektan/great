@@ -43,13 +43,13 @@ h1 {
 }
 
 .dropdown .dropdown-menu.show {
-  animation: 0.3s slidedown forwards;
+  animation: 0.2s slidedown forwards;
 }
 
 @keyframes slidedown {
   from {
     opacity: 0;
-    top: -10px;
+    top: -4px;
   }
   to {
     opacity: 1;
