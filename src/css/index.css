@@ -6,6 +6,13 @@
   --black: #000;
   --gray-light: #c1c7d6;
   --gray-dark: #6d7682;
+
+  /* --shadow-deep: 0px 8px 20px rgba(30, 35, 48, 0.08),
+    0px 2px 8px rgba(50, 57, 84, 0.05); */
+  --shadow-deep: 0px 2px 6px rgba(28, 28, 31, 0.03),
+    0 10px 30px -5px rgba(28, 28, 31, 0.15);
+  --shadow: 0px 2px 6px rgba(28, 28, 31, 0.05),
+    0px 1px 2px rgba(23, 23, 26, 0.15);
 }
 
 html,
@@ -22,6 +29,35 @@ h1 {
   font-size: 28px;
   font-weight: 700;
 }
+
+/* Bootstrap Overrides */
+
+.btn-primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.dropdown .dropdown-menu {
+  box-shadow: var(--shadow-deep);
+  border: 0;
+}
+
+.dropdown .dropdown-menu.show {
+  animation: 0.3s slidedown forwards;
+}
+
+@keyframes slidedown {
+  from {
+    opacity: 0;
+    top: -10px;
+  }
+  to {
+    opacity: 1;
+    top: 0;
+  }
+}
+
+/* App */
 
 .app-container {
   min-height: 100%;

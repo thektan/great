@@ -364,7 +364,7 @@ class Track extends Component {
               </Button>
             </div>
 
-            <Chart data={this.buildChart()} colors={["#007bff"]} />
+            <Chart data={this.buildChart()} colors={["#2072e8"]} />
 
             {logModal && (
               <LogModal
