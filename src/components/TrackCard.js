@@ -1,6 +1,3 @@
-import "frappe-charts/dist/frappe-charts.min.css";
-
-import "../css/Chart.css";
 import "../css/Table.css";
 import "../css/Track.css";
 
@@ -20,7 +17,6 @@ import {
   faCheck,
   faThumbsUp
 } from "@fortawesome/fontawesome-free-solid";
-import { groupBy, keys, merge, map, times, zipObject } from "lodash";
 import { withRouter } from "react-router-dom";
 import Icon from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
@@ -28,7 +24,6 @@ import classNames from "classnames";
 import moment from "moment";
 
 import { DATA } from "../utils/wedeploy";
-import Chart from "./Chart";
 import CreatePointModal from "./CreatePointModal";
 import LogModal from "./LogModal";
 
@@ -98,57 +93,10 @@ class TrackCard extends Component {
       });
   }
 
-  /**
-   * Converts points into the data object needed to be digestible for frappe
-   * charts.
-   * @return {Object} Frappe chart data object.
-   */
-  buildChart() {
-    const { points } = this.state;
-
-    const weekArray = times(7, i =>
-      moment()
-        .subtract(i, "d")
-        .startOf("day")
-        .format()
-    ).reverse();
-
-    const weekArrayEmptyMap = zipObject(weekArray, times(7, () => []));
-
-    const pointsGroupedByDay = groupBy(points, item =>
-      moment(item.date)
-        .startOf("day")
-        .format()
-    );
-
-    const pointsArrayMap = merge(weekArrayEmptyMap, pointsGroupedByDay);
-
-    const labels = keys(pointsArrayMap).map(label =>
-      moment(label).format("M/D")
-    );
-
-    const values = map(pointsArrayMap, (value, key) =>
-      value.reduce((sum, item) => sum + item.amount, 0)
-    );
-
-    return {
-      labels,
-      datasets: [
-        {
-          values
-        }
-      ]
-    };
-  }
-
   handleClick() {
-    const { compact, id } = this.props;
+    const { history, id } = this.props;
 
-    if (!compact) {
-      return;
-    }
-
-    this.props.history.push(`/tracks/${id}`);
+    history.push(`/tracks/${id}`);
   }
 
   /**
@@ -270,7 +218,7 @@ class TrackCard extends Component {
   }
 
   render() {
-    const { compact = false, id, name } = this.props;
+    const { id, name } = this.props;
 
     const {
       doneSubmitting,
@@ -283,10 +231,7 @@ class TrackCard extends Component {
     return (
       <Card
         body
-        className={classNames("track-card", "mb-3", {
-          compact,
-          "mt-3": !compact
-        })}
+        className={classNames("track-card", "mb-3")}
         key={id}
         onClick={this.handleClick}
       >
@@ -356,8 +301,6 @@ class TrackCard extends Component {
             </Transition>
           </Button>
         </div>
-
-        {!compact && <Chart data={this.buildChart()} colors={["#007bff"]} />}
 
         {logModal && (
           <LogModal

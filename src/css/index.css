@@ -3,6 +3,7 @@
   --color-secondary: #e8f1ff;
   --color-label: #bcc1c7;
 
+  --black: #000;
   --gray-light: #c1c7d6;
   --gray-dark: #6d7682;
 }
@@ -13,9 +14,18 @@ body,
   height: 100%;
 }
 
+body {
+  background-color: #fafbfc;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
 .app-container {
   min-height: 100%;
-  max-width: 700px;
+  max-width: 940px;
   display: flex;
   flex-direction: column;
 }
@@ -36,5 +46,5 @@ body,
 }
 
 .welcome-message {
-  font-weight: 600;
+  font-size: 34px;
 }

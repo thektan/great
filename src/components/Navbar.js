@@ -4,6 +4,7 @@ import React, { Component } from "react";
 
 import { ROUTES } from "../utils/routes";
 import UserIcon from "./UserIcon";
+import "../css/Navbar.css";
 
 class Navbar extends Component {
   render() {
