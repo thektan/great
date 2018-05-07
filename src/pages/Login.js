@@ -5,24 +5,18 @@ import { Container, Button } from "reactstrap";
 import "../css/Login.css";
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
-  }
-
   componentDidMount() {
     AUTH.onSignIn(user => {
       window.location = ROUTES.HOME;
     });
   }
 
-  handleGoogleLogin() {
+  handleGoogleLogin = () => {
     const googleProvider = new AUTH.provider.Google();
     googleProvider.setProviderScope("email");
 
     AUTH.signInWithRedirect(googleProvider);
-  }
+  };
 
   render() {
     return (

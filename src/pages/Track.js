@@ -41,14 +41,6 @@ class Track extends Component {
       timeAgoSinceMostRecent: null,
       track: {}
     };
-
-    this.handleDone = this.handleDone.bind(this);
-    this.handleDeleteTrack = this.handleDeleteTrack.bind(this);
-    this.handleCreatePointModal = this.handleCreatePointModal.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleCreatePoint = this.handleCreatePoint.bind(this);
-    this.handleLogModal = this.handleLogModal.bind(this);
-    this.fetchPoints = this.fetchPoints.bind(this);
   }
 
   componentDidMount() {
@@ -63,7 +55,7 @@ class Track extends Component {
    * Updates the input value state.
    * https://reactjs.org/docs/forms.html
    */
-  handleInputChange(event) {
+  handleInputChange = event => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
@@ -71,7 +63,7 @@ class Track extends Component {
     this.setState({
       [name]: value
     });
-  }
+  };
 
   /**
    * Fetch and update the data points for this current track.
@@ -177,7 +169,7 @@ class Track extends Component {
   /**
    * What happens when you click the "done" button.
    */
-  handleDone(event) {
+  handleDone = event => {
     event.stopPropagation();
 
     const { id } = this.props.match.params;
@@ -199,12 +191,12 @@ class Track extends Component {
       .then(() => {
         this.setState({ doneSubmitting: false });
       });
-  }
+  };
 
   /**
    * Deletes a track and the points associated with it.
    */
-  handleDeleteTrack() {
+  handleDeleteTrack = () => {
     const { id } = this.props.match.params;
     const { points } = this.state;
 
@@ -225,12 +217,12 @@ class Track extends Component {
         console.log("Successfully deleted track")
       );
     }
-  }
+  };
 
   /**
    * Creates a new point.
    */
-  handleCreatePoint(pointDateTime) {
+  handleCreatePoint = pointDateTime => {
     const { id } = this.props.match.params;
 
     DATA.create("points", {
@@ -250,25 +242,25 @@ class Track extends Component {
       .catch(err => {
         console.log("Error", err);
       });
-  }
+  };
 
   /**
    * Toggles the modal that shows the form to create a new point.
    */
-  handleLogModal() {
+  handleLogModal = () => {
     this.setState({
       logModal: !this.state.logModal
     });
-  }
+  };
 
   /**
    * Toggles the modal that shows the form to create a new point.
    */
-  handleCreatePointModal() {
+  handleCreatePointModal = () => {
     this.setState({
       createPointModal: !this.state.createPointModal
     });
-  }
+  };
 
   render() {
     const {

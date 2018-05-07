@@ -26,24 +26,19 @@ class UserIcon extends Component {
       createTrackModal: false,
       name: ""
     };
-
-    this.handleSignOut = this.handleSignOut.bind(this);
-    this.handleCreateTrackModal = this.handleCreateTrackModal.bind(this);
-    this.handleNewTrack = this.handleNewTrack.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  handleSignOut() {
+  handleSignOut = () => {
     AUTH.signOut()
       .then(() => (window.location = ROUTES.LOGIN))
       .catch(err => console.log("error", err));
-  }
+  };
 
   /**
    * Updates the input value state.
    * https://reactjs.org/docs/forms.html
    */
-  handleInputChange(event) {
+  handleInputChange = event => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
@@ -51,18 +46,18 @@ class UserIcon extends Component {
     this.setState({
       [name]: value
     });
-  }
+  };
 
-  handleCreateTrackModal() {
+  handleCreateTrackModal = () => {
     this.setState({
       createTrackModal: !this.state.createTrackModal
     });
-  }
+  };
 
   /**
    * Creates a new track.
    */
-  handleNewTrack(event) {
+  handleNewTrack = event => {
     event.preventDefault();
 
     const { name } = this.state;
@@ -79,7 +74,7 @@ class UserIcon extends Component {
       .catch(err => {
         console.log("Error", err);
       });
-  }
+  };
 
   render() {
     return currentUser ? (

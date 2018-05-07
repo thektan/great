@@ -16,9 +16,6 @@ class CreatePointModal extends Component {
     this.state = {
       pointDateTime: this.getCurrentDate()
     };
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleCreatePoint = this.handleCreatePoint.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -32,7 +29,7 @@ class CreatePointModal extends Component {
    * Updates the input value state.
    * https://reactjs.org/docs/forms.html
    */
-  handleInputChange(event) {
+  handleInputChange = event => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
@@ -40,14 +37,14 @@ class CreatePointModal extends Component {
     this.setState({
       [name]: value
     });
-  }
+  };
 
   /**
    * Creates a new point.
    */
-  handleCreatePoint() {
+  handleCreatePoint = () => {
     this.props.onSubmit(this.state.pointDateTime);
-  }
+  };
 
   /**
    * Gets the current date formatted for datetime input.

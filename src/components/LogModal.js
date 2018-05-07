@@ -24,8 +24,6 @@ class LogModal extends Component {
     this.state = {
       points: []
     };
-
-    this.handleDeletePoint = this.handleDeletePoint.bind(this);
   }
 
   componentDidMount() {
@@ -47,7 +45,7 @@ class LogModal extends Component {
    * Deletes a single point from the track.
    * @param {Number} id of the point to delete.
    */
-  handleDeletePoint(id) {
+  handleDeletePoint = id => {
     if (
       window.confirm(
         "Are you sure you want to delete this point? This data will be gone forever! 😱"
@@ -59,7 +57,7 @@ class LogModal extends Component {
         this.props.onUpdatePoints();
       });
     }
-  }
+  };
 
   /**
    * Gets the css class to color the log table rows.

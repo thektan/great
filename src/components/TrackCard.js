@@ -39,15 +39,6 @@ class TrackCard extends Component {
       timeAgoSinceMostRecent: null,
       doneSubmitting: false
     };
-
-    this.handleClick = this.handleClick.bind(this);
-    this.handleDone = this.handleDone.bind(this);
-    this.handleDeleteTrack = this.handleDeleteTrack.bind(this);
-    this.handleCreatePointModal = this.handleCreatePointModal.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleCreatePoint = this.handleCreatePoint.bind(this);
-    this.handleLogModal = this.handleLogModal.bind(this);
-    this.updatePoints = this.updatePoints.bind(this);
   }
 
   componentDidMount() {
@@ -60,7 +51,7 @@ class TrackCard extends Component {
    * Updates the input value state.
    * https://reactjs.org/docs/forms.html
    */
-  handleInputChange(event) {
+  handleInputChange = event => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
@@ -68,12 +59,12 @@ class TrackCard extends Component {
     this.setState({
       [name]: value
     });
-  }
+  };
 
   /**
    * Fetch and update the data points for this current track.
    */
-  updatePoints() {
+  updatePoints = () => {
     const { id } = this.props;
 
     const currentDate = moment()
@@ -91,18 +82,18 @@ class TrackCard extends Component {
       .then(points => {
         this.setState({ points });
       });
-  }
+  };
 
-  handleClick() {
+  handleClick = () => {
     const { history, id } = this.props;
 
     history.push(`/tracks/${id}`);
-  }
+  };
 
   /**
    * What happens when you click the "done" button.
    */
-  handleDone(event) {
+  handleDone = event => {
     event.stopPropagation();
 
     const { id } = this.props;
@@ -124,12 +115,12 @@ class TrackCard extends Component {
       .then(() => {
         this.setState({ doneSubmitting: false });
       });
-  }
+  };
 
   /**
    * Deletes a track and the points associated with it.
    */
-  handleDeleteTrack() {
+  handleDeleteTrack = () => {
     const { id } = this.props;
     const { points } = this.state;
 
@@ -150,12 +141,12 @@ class TrackCard extends Component {
         console.log("Successfully deleted track")
       );
     }
-  }
+  };
 
   /**
    * Creates a new point.
    */
-  handleCreatePoint(pointDateTime) {
+  handleCreatePoint = pointDateTime => {
     const { id } = this.props;
 
     DATA.create("points", {
@@ -175,25 +166,25 @@ class TrackCard extends Component {
       .catch(err => {
         console.log("Error", err);
       });
-  }
+  };
 
   /**
    * Toggles the modal that shows the form to create a new point.
    */
-  handleLogModal() {
+  handleLogModal = () => {
     this.setState({
       logModal: !this.state.logModal
     });
-  }
+  };
 
   /**
    * Toggles the modal that shows the form to create a new point.
    */
-  handleCreatePointModal() {
+  handleCreatePointModal = () => {
     this.setState({
       createPointModal: !this.state.createPointModal
     });
-  }
+  };
 
   setMostRecentPoint() {
     const { id } = this.props;
