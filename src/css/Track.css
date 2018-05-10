@@ -37,10 +37,37 @@
   font-size: 1.5rem;
 }
 
-.section__details {
+.section__details,
+.section__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.section__header {
+  margin-bottom: 10px;
+}
+
+.section__header-title {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.section__header .count {
+  display: flex;
+  align-items: center;
+}
+
+.section__header .count__label {
+  color: var(--gray-light);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.section__header .count__value {
+  font-weight: 600;
+  margin-right: 6px;
 }
 
 .button__done {

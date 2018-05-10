@@ -13,3 +13,24 @@
 .morning {
   background-color: #fdf4b5;
 }
+
+.table th {
+  color: var(--gray-light);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.table thead th {
+  border-width: 0 !important;
+}
+
+.table tbody td {
+  font-size: 14px;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.table tbody tr:first-child td {
+  border-top-width: 0;
+}

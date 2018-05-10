@@ -1,6 +1,7 @@
 import "frappe-charts/dist/frappe-charts.min.css";
 
 import "../css/Chart.css";
+import "../css/Table.css";
 
 import {
   Button,
@@ -8,24 +9,28 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
+  Table,
   UncontrolledDropdown
 } from "reactstrap";
 import { PulseLoader as Loader } from "halogenium";
+import MoreVertIcon from "../icons/more-vert.svg";
 import { Transition } from "react-transition-group";
 import {
   faCheck,
   faCog,
   faThumbsUp
 } from "@fortawesome/fontawesome-free-solid";
-import { groupBy, keys, merge, map, times, zipObject } from "lodash";
 import Icon from "@fortawesome/react-fontawesome";
 import React, { Component, Fragment } from "react";
 import moment from "moment";
-
 import { DATA } from "../utils/wedeploy";
+import { groupBy, keys, merge, map, times, zipObject } from "lodash";
 import Chart from "../components/Chart";
 import CreatePointModal from "../components/CreatePointModal";
 import LogModal from "../components/LogModal";
+
+const DAY_FORMAT = "ddd MMM D, YYYY";
+const TIME_FORMAT = "h:mm a";
 
 class Track extends Component {
   constructor(props) {
@@ -39,6 +44,7 @@ class Track extends Component {
       points: [],
       statsLoading: true,
       timeAgoSinceMostRecent: null,
+      totalPoints: null,
       track: {}
     };
   }
@@ -49,6 +55,7 @@ class Track extends Component {
     this.fetchPoints();
 
     this.fetchMostRecentPoint();
+    this.fetchPointsTotal();
   }
 
   /**
@@ -86,6 +93,15 @@ class Track extends Component {
       .then(points => {
         this.setState({ points });
       });
+  }
+
+  fetchPointsTotal() {
+    const { id } = this.props.match.params;
+
+    DATA.where("trackId", "=", id)
+      .count()
+      .get("points")
+      .then(totalPoints => this.setState({ totalPoints }));
   }
 
   fetchTrack() {
@@ -164,6 +180,14 @@ class Track extends Component {
         }
       ]
     };
+  }
+
+  getDay(date) {
+    return moment(date).format(DAY_FORMAT);
+  }
+
+  getTime(date) {
+    return moment(date).format(TIME_FORMAT);
   }
 
   /**
@@ -268,8 +292,10 @@ class Track extends Component {
       doneSubmitting,
       loading,
       logModal,
+      points,
       statsLoading,
       timeAgoSinceMostRecent,
+      totalPoints,
       track: { name }
     } = this.state;
 
@@ -357,6 +383,49 @@ class Track extends Component {
             </div>
 
             <Chart data={this.buildChart()} colors={["#2072e8"]} />
+
+            <div className="section__header">
+              <div className="section__header-title">{"History"}</div>
+
+              <div className="count">
+                <span className="count__value">{totalPoints}</span>
+                <span className="count__label">
+                  {totalPoints === 1 ? "Point Recorded" : "Points Recorded"}
+                </span>
+              </div>
+            </div>
+
+            <Table responsive size="sm">
+              <thead>
+                <tr>
+                  <th>{"Day"}</th>
+                  <th>{"Time"}</th>
+                  <th />
+                </tr>
+              </thead>
+              <tbody>
+                {points.map(point => (
+                  <tr key={point.id}>
+                    <td>{this.getDay(point.date)}</td>
+                    <td>{this.getTime(point.date)}</td>
+                    <td className="text-right">
+                      <UncontrolledDropdown>
+                        <DropdownToggle color="link" caret={false} size="sm">
+                          <img src={MoreVertIcon} alt="More Icon" />
+                        </DropdownToggle>
+                        <DropdownMenu right>
+                          <DropdownItem
+                            onClick={() => this.handleDeletePoint(point.id)}
+                          >
+                            {"Delete Point"}
+                          </DropdownItem>
+                        </DropdownMenu>
+                      </UncontrolledDropdown>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
 
             {logModal && (
               <LogModal
