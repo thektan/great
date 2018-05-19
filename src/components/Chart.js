@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Frappe from "frappe-charts/dist/frappe-charts.min.esm";
+import { Chart as Frappe } from "frappe-charts/dist/frappe-charts.esm.js";
 import "../css/Chart.css";
 
 /**

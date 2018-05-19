@@ -8,7 +8,7 @@
     "@fortawesome/react-fontawesome": "^0.0.17",
     "bootstrap": "^4.0.0",
     "classnames": "^2.2.5",
-    "frappe-charts": "^1.0.0",
+    "frappe-charts": "^1.1.0",
     "halogenium": "^2.2.3",
     "lodash": "^4.17.5",
     "moment": "^2.21.0",
@@ -17,7 +17,7 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
     "react-transition-group": "^2.2.1",
-    "reactstrap": "^5.0.0-beta.2",
+    "reactstrap": "6.0.1",
     "wedeploy": "^4.2.0"
   },
   "scripts": {
