@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Frappe from "frappe-charts/dist/frappe-charts.min.esm";
+import "../css/Chart.css";
 
 /**
  * @source https://github.com/tobiaslins/frappe-charts-react-example/blob/master/src/chart.js
