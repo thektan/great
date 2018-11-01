@@ -36,6 +36,7 @@ class Track extends Component {
     super(props);
 
     this.state = {
+      allPoints: [],
       createPointModal: false,
       doneSubmitting: false,
       loading: true,
@@ -52,6 +53,7 @@ class Track extends Component {
     this.fetchTrack();
 
     this.fetchPoints();
+    this.fetchAllPoints();
 
     this.fetchMostRecentPoint();
     this.fetchPointsTotal();
@@ -91,6 +93,17 @@ class Track extends Component {
       .get("points")
       .then(points => {
         this.setState({ points });
+      });
+  }
+
+  fetchAllPoints() {
+    const { id } = this.props.match.params;
+
+    DATA.where("trackId", "=", id)
+      .orderBy("date", "desc")
+      .get("points")
+      .then(allPoints => {
+        this.setState({ allPoints });
       });
   }
 
@@ -287,11 +300,11 @@ class Track extends Component {
 
   render() {
     const {
+      allPoints,
       createPointModal,
       doneSubmitting,
       loading,
       logModal,
-      points,
       statsLoading,
       timeAgoSinceMostRecent,
       totalPoints,
@@ -403,7 +416,7 @@ class Track extends Component {
                 </tr>
               </thead>
               <tbody>
-                {points.map(point => (
+                {allPoints.map(point => (
                   <tr key={point.id}>
                     <td>{this.getDay(point.date)}</td>
                     <td>{this.getTime(point.date)}</td>
